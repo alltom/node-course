@@ -77,7 +77,7 @@ div.popup {
 
 <h2>Why Node.js?</h2>
 
-<p>You could be using <a href="http://rubyonrails.org/">Ruby on Rails</a>, <a href="https://www.djangoproject.com/">Django</a>, or <a href="http://php.net/">PHP</a>. Why write your web server with <a href="http://nodejs.org/">Node.js</a>?
+<p>You could be using <a href="http://rubyonrails.org/">Ruby on Rails</a>, <a href="https://www.djangoproject.com/">Django</a>, or <a href="http://php.net/" title="Why would you use this?">PHP</a>. Why write your web server with <a href="http://nodejs.org/">Node.js</a>?
 
 <ul>
 <li><strong>You already know JavaScript.</strong> More or less.
@@ -115,7 +115,7 @@ div.popup {
 <p><strong>Node.js</strong>
 </td>
 <td>
-<p><a href="http://nodejs.org/">Use the big install button on their web page</a> to download an installer.
+<p><a href="http://nodejs.org/">Use the big install button on their web page</a> to download an installer.g
 </td>
 <td>
 <p>You know it worked if:
@@ -176,6 +176,8 @@ div.popup {
 
 
 <h2 class="section">1. Starting Out with Node.js</h2>
+
+<h3>Overview</h3>
 
 <p>You write JavaScript code in files ending with <tt>.js</tt> and run them in a terminal with a command like <tt>node app.js</tt>.
 
@@ -245,7 +247,7 @@ express@3.1.0 ./node_modules/express
 
 <ol class="instructions">
 
-<li><p>Delete the <tt>console.log</tt> statement we have in <tt>app.js</tt> and replace it with this:
+<li><p>Delete the <tt>console.log</tt> statement we have in <tt>app.js</tt> and replace it with the following code. Hover over the highlighted portions of the code for descriptions of the parts that you'll be changing later.
 
 <pre class="file">var express = require("express");
 var app = express();
@@ -258,9 +260,7 @@ app.listen(3000, <span class="slot" title="This function will be called when the
     console.log('Server started at http://localhost:3000/');
 }</span>);</pre>
 
-<p>Hover over the highlighted portions of that code for descriptions of the parts that you'll be changing later.
-
-<li><p>Run <tt>app.js</tt> in the terminal again:
+<li><p>Run <tt>node app.js</tt> in the terminal again:
 
 <pre class="terminal"><span class="prompt">$</span> <span class="input">node app.js</span>
 Server started at http://localhost:3000/</pre>
@@ -274,7 +274,7 @@ Server started at http://localhost:3000/</pre>
 
 <ol class="instructions">
 
-<li><p>Kill the web server by pressing <tt>Ctrl+C</tt> in the terminal.
+<li><p><strong>Kill the web server</strong> by pressing <tt>Ctrl+C</tt> in the terminal.
 
 <li><p>Run the server again, but use <tt>node-theseus</tt> this time:
 
