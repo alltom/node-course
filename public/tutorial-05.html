@@ -1,0 +1,69 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/style.css);
+
+</style>
+
+
+<h2>Understand the Web Server with the Theseus Debugger</h2>
+
+<ol class="instructions">
+
+<li><p><strong>Kill the web server</strong> by pressing <i>Ctrl+C</i> in the terminal. On Windows, you may need to press it twice.
+
+<li><p>Run the server again, but use <tt>node-theseus</tt> this time.
+
+<pre class="terminal"><span class="prompt">$</span> <span class="input"><strong>node-theseus</strong> app.js</span>
+Server started at http://localhost:3000/</pre>
+
+<li><p>Within a few seconds, Brackets should show call counts to the left of every function in the code, like this:
+
+<p><img src="images/theseus.png" />
+
+<p>This is a feature of the extension you installed called <strong>Theseus</strong>.
+
+<li><p>When you refresh <a href="http://localhost:3000/">http://localhost:3000/</a>, the call counts update in real-time. You should see that the first function is called once every time you reload the page.
+
+<p><img src="images/theseus2.png" />
+
+<li><p>Click on them. A log panel will pop up with information about every time those functions were called:
+
+<p><img src="images/theseus3.png" />
+
+</ol>
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-06.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<script src="javascripts/jquery.js"></script>
+<script>
+var $popup = $("<div class='popup' />").appendTo(document.body).hide();
+var popupOwner = undefined;
+
+$(document.body).on("mouseover", "span.slot", function (e) {
+	$popup.html($(this).attr("data-description")).show();
+	$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
+	popupOwner = this;
+});
+$(document.body).on("mousemove", "span.slot", function (e) {
+	if (popupOwner === this) {
+		$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
+	}
+});
+$(document.body).on("mouseout", "span.slot", function (e) {
+	if (popupOwner === this) {
+		$popup.hide();
+	}
+});
+
+$("span.slot").each(function () {
+	$(this).attr("data-description", $(this).attr("title"));
+	$(this).attr("title", "");
+});
+</script>

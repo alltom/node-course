@@ -1,0 +1,72 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/style.css);
+
+</style>
+
+
+<h2>Make a Simple HTTP Server with Express</h2>
+
+<ol class="instructions">
+
+<li><p>Delete the <tt>console.log</tt> statement we have in <tt>app.js</tt> and replace it with the following code.
+
+<p>Hover over the highlighted portions of the code to see what they do.
+
+<pre class="file">var <span class="slot" title="<tt>require</tt> loads the 'express' module and we store it in a variable called <tt>express</tt>.">express = require("express")</span>;
+var <span class="slot" title="In this case, the 'express' module is a function that we can call to create a new server called 'app'.">app = express()</span>;
+
+<span class="slot" title="Our app's <tt>get</tt> function adds a callback for responding to HTTP GET requests.<br /><br />(When you type a URL in a browser, it makes a GET request.)">app.get</span>(<span class="slot" title="This is the URL that you want to respond to. It is relative to the root of the server, so &lt;tt&gt;/&lt;/tt&gt; corresponds to &lt;tt&gt;http://localhost:3000/&lt;/tt&gt; on this server.">'/'</span>, <span class="slot" title="This callback function will be called every time someone requests the given URL. &lt;br /&gt;&lt;br /&gt; &lt;tt&gt;req&lt;/tt&gt; is short for 'request'. &lt;br /&gt; &lt;tt&gt;res&lt;/tt&gt; is short for 'response'.">function (req, res) {
+    res.end("Hello, world!");
+}</span>);
+
+app.listen(3000, <span class="slot" title="This callback function will be called when the server launches. It is an optional argument to &lt;tt&gt;listen&lt;/tt&gt;, so you can leave it out.">function () {
+    console.log('Server started at http://localhost:3000/');
+}</span>);</pre>
+
+<p>Node.js uses callback functions a lot. This code has two: one will be called when the server starts, and one will be called every time someone requests <tt>'/'</tt>.
+
+<li><p>Run <tt>node app.js</tt> in the terminal again:
+
+<pre class="terminal"><span class="prompt">$</span> <span class="input">node app.js</span>
+Server started at http://localhost:3000/</pre>
+
+<li><p>Does it work? Try visiting <a href="http://localhost:3000/" target="_blank">http://localhost:3000/</a>. You should see "Hello, World!" on the page and nothing else.
+
+</ol>
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-05.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<script src="javascripts/jquery.js"></script>
+<script>
+var $popup = $("<div class='popup' />").appendTo(document.body).hide();
+var popupOwner = undefined;
+
+$(document.body).on("mouseover", "span.slot", function (e) {
+	$popup.html($(this).attr("data-description")).show();
+	$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
+	popupOwner = this;
+});
+$(document.body).on("mousemove", "span.slot", function (e) {
+	if (popupOwner === this) {
+		$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
+	}
+});
+$(document.body).on("mouseout", "span.slot", function (e) {
+	if (popupOwner === this) {
+		$popup.hide();
+	}
+});
+
+$("span.slot").each(function () {
+	$(this).attr("data-description", $(this).attr("title"));
+	$(this).attr("title", "");
+});
+</script>

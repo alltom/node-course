@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/style.css);
+
+</style>
+
+
+<h2>Install a Third-Party Library (express)</h2>
+
+<p>A Node.js web server is just a Node.js script that listens for HTTP requests. Instead of <a href="http://tools.ietf.org/html/rfc2616">learning the HTTP protocol</a>, let's use someone else's HTTP library.
+
+<p>We'll use <a href="http://expressjs.com/">express</a> (which uses <a href="http://www.senchalabs.org/connect/">connect</a>, which uses the built-in <a href="http://nodejs.org/api/http.html">http</a> library (Node.js libraries often compose well)).
+
+<ol class="instructions">
+
+<li><p>You usually add third-party libraries to your project with the <tt>npm</tt> command. Install Express <em>in the <tt>node-course</tt> directory</em> like this:
+
+<pre class="terminal"><span class="prompt">$</span> <span class="input">npm install express</span>
+<i>[lots of output, ending with...]</i>
+express@<strong>3.2.0</strong> ./node_modules/express 
+├── methods@0.0.1
+├── fresh@0.1.0
+├── cookie-signature@1.0.1
+├── range-parser@0.0.4
+├── buffer-crc32@0.2.1
+├── cookie@0.0.5
+├── commander@0.6.1
+├── debug@0.7.2
+├── mkdirp@0.3.5
+├── send@0.1.0 (mime@1.2.6)
+└── connect@2.7.6 (pause@0.0.1, buffer-crc32@0.1.1, bytes@0.2.0, formidable@1.0.11, qs@0.5.1)</pre>
+
+<li><p>I highlighted the version of Express that was installed because you want to record it in <tt>package.json</tt>. When you deploy a Node.js server, <tt>package.json</tt> will usually be used to install your server's dependencies, so it's good to keep it up-to-date.
+
+<p>Modify the <tt>package.json</tt> file to look like this:
+
+<pre class="file">{
+    "dependencies" : {
+        "express" : "<strong>3.2.x</strong>"
+    }
+}</pre>
+
+<p>We used "3.2.x" instead of "3.2.0" so that if 3.2.1 happens to fix a bug, it will automatically be used instead. (If you like, <a href="http://blog.nodejitsu.com/package-dependencies-done-right">read more about semantic versioning and <tt>npm</tt> dependency best practices</a>.)
+
+<p><a href="http://www.json.org/">JSON is a simple syntax</a> for writing objects with keys and values, just like in JavaScript.
+
+</ol>
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-04.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
