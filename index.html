@@ -15,7 +15,7 @@ pre, code, tt, textarea {
 	font-family: "Menlo", "Monaco", "Courier New", monospace;
 }
 
-tt {
+tt, .select-all {
 	background: #eee;
 }
 
@@ -107,6 +107,7 @@ div.popup {
 <ol>
 <li>You see a Start menu or a Dock. If you see penguins, you are probably using Linux and will not be able to use Brackets or Theseus.
 </ol>
+<p><img src="images/windows-verify.png" />
 </td>
 </tr>
 
@@ -115,7 +116,8 @@ div.popup {
 <p><strong>Node.js</strong>
 </td>
 <td>
-<p><a href="http://nodejs.org/">Use the big install button on their web page</a> to download an installer.g
+<p><a href="http://nodejs.org/">Use the big install button on their web page</a> to download an installer.
+<p><a href="http://nodejs.org/"><img src="images/nodejs.png" /></a>
 </td>
 <td>
 <p>You know it worked if:
@@ -124,6 +126,7 @@ div.popup {
 <li>You can run <tt>node</tt> in a console and get a JavaScript prompt
 <li>You can run <tt>npm</tt> in a console and see instructions for how to invoke <tt>npm</tt>
 </ol>
+<p><img src="images/nodejs-verify.png" />
 </td>
 </tr>
 
@@ -133,13 +136,16 @@ div.popup {
 </td>
 <td>
 <p><a href="http://download.brackets.io/">Use the big download button on their web page</a>.
+<p><a href="http://download.brackets.io"><img src="images/brackets.png" /></a>
 </td>
 <td>
 <p>You know it worked if:
 
 <ol>
-<li>You can launch the Brackets application and see a text editor. (On OS X, you should locate Brackets in the Finder, and open it by right-clicking and selecting "Open".)
+<li>You can launch the Brackets application and see a text editor.
+	<br /><strong>OS X:</strong> If OS X says it doesn't trust Brackets, locate Brackets in the Finder and open it by right-clicking and selecting "Open".
 </ol>
+<p><img src="images/brackets-verify.png" />
 </td>
 </tr>
 
@@ -150,14 +156,12 @@ div.popup {
 <td>
 <p>Theseus:
 <ol>
-<li><a href="https://s3.amazonaws.com/alltom/theseus/theseus-0.2.3.zip">Download this zip file</a>.
 <li>Launch Brackets.
-<li>Click the <i>Help &gt; Show Extensions Folder</i> menu item.
-<li>Enter the <tt>user</tt> sub-directory of the folder that opens.
-<li>Extract the contents of the zip file. Place the <tt>brackets-theseus</tt> directory into the <tt>user</tt> sub-directory.
+<li>Click the <i>File &gt; Install Extension...</i> menu item.
+<li>Paste this URL into the dialog and select OK: <span class="select-all">https://s3.amazonaws.com/alltom/theseus/theseus-0.2.3.zip</span>
 <li>Close and re-launch Brackets.
 </ol>
-<p>node-theseus (helper for Node.js):
+<p>node-theseus:
 <ol>
 <li><strong>Windows:</strong> Open the Command Prompt program and run <tt>npm install -g node-theseus</tt><br /><strong>OS X:</strong> Open a Terminal and run <tt>sudo npm install -g node-theseus</tt>
 </ol>
@@ -169,6 +173,7 @@ div.popup {
 <li>You can launch the Brackets and see a new menu item, <i>Help &gt; Send Theseus Feedback...</i>
 <li>When you type <tt>node-theseus</tt> in a terminal, you see instructions for how to run <tt>node-theseus</tt> (ex: <tt>node-theseus [file.js]</tt>)
 </ol>
+<p><img src="images/theseus-verify.png" />
 </td>
 </tr>
 
@@ -319,6 +324,20 @@ app.listen(3000, <span class="slot" title="This function will be called when the
 
 
 <script src="jquery.js"></script>
+<script>
+function selectText() {
+	if (document.selection) {
+		var range = document.body.createTextRange();
+		range.moveToElementText(this);
+		range.select();
+	} else if (window.getSelection) {
+		var range = document.createRange();
+		range.selectNode(this);
+		window.getSelection().addRange(range);
+	}
+}
+$(".select-all").on("click", selectText);
+</script>
 <script>
 var $popup = $("<div class='popup' />").appendTo(document.body).hide();
 var popupOwner = undefined;
