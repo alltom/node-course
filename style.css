@@ -1,0 +1,63 @@
+body {
+	margin-bottom: 200px;
+}
+
+h2.section {
+	margin-top: 120px;
+}
+
+pre, code, tt, textarea {
+	font-family: "Menlo", "Monaco", "Courier New", monospace;
+}
+
+tt, .select-all {
+	background: #eee;
+}
+
+td {
+	vertical-align: top;
+	padding: 8px;
+}
+
+pre.file {
+	white-space: pre-wrap;
+	background-color: #ddd;
+	color: #334;
+	padding: 8px;
+	border-radius: 4px;
+	border: 0;
+}
+pre.file span.slot {
+	background: #fff;
+	cursor: pointer;
+}
+pre.file span.slot:hover {
+	background: #ffc;
+}
+
+pre.terminal {
+	white-space: pre-wrap;
+	background-color: #000;
+	color: #ccc;
+	padding: 8px;
+	border-radius: 4px;
+	border: 0;
+}
+pre.terminal .prompt {
+	color: #fff;
+}
+pre.terminal .input {
+	color: #ff0;
+	/*font-weight: bold;*/
+}
+
+div.popup {
+	position: absolute;
+	display: inline-block;
+	max-width: 20em;
+	background: #fff;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	padding: 8px;
+	box-shadow: 4px 4px 4px #888;
+}
