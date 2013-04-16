@@ -1,5 +1,11 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Serif|PT+Serif:b|PT+Serif:i|PT+Sans|PT+Sans:b);
+
 body {
 	margin-bottom: 200px;
+	font-family: "PT Serif", serif;
+	color: #333;
+	font-size: 16px;
+	line-height: 24px;
 }
 
 h2.section {
@@ -34,6 +40,11 @@ pre.file span.slot {
 pre.file span.slot:hover {
 	background: #ffc;
 }
+pre.file strong {
+	color: #000;
+	background: #fff;
+	border-radius: 4px;
+}
 
 pre.terminal {
 	white-space: pre-wrap;
@@ -49,6 +60,11 @@ pre.terminal .prompt {
 pre.terminal .input {
 	color: #ff0;
 	/*font-weight: bold;*/
+}
+pre.terminal strong {
+	color: #fff;
+	background: #333;
+	border-radius: 4px;
 }
 
 div.popup {

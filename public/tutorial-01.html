@@ -3,7 +3,7 @@
 <title>Node.js Mini-Course</title>
 <style>
 
-@import url(../style.css);
+@import url(stylesheets/style.css);
 
 </style>
 
@@ -22,6 +22,53 @@
 </ul>
 
 <p><a href="http://nodeguide.com/convincing_the_boss.html">Felix's Node.js Convincing the boss guide</a> has a list of good <em>and</em> bad reasons to use Node.js.
+
+
+<h2 class="section">Pre</h2>
+
+<h3>Node.js</h3>
+
+<p><tt>app.js</tt> is empty. Add this:
+
+<pre class="file">console.log("Hello, World!");</pre>
+
+<p>Run it with <tt>node app.js</tt>.
+
+<p>A Node.js web server is just a script like this one that also listens for HTTP requests. Let's add an HTTP library.
+
+<h3>Express</h3>
+
+<p>We'll use <a href="http://expressjs.com/">express</a> (instead of <a href="http://www.senchalabs.org/connect/">connect</a> or the built-in <a href="http://nodejs.org/api/http.html">http</a> library).
+
+<p>Express is distributed as a library. You download libraries with <tt>npm</tt>. Install Express <em>in the <tt>node-course</tt> directory</em> like this:
+
+<pre class="terminal"><span class="prompt">$</span> <span class="input">npm install express</span>
+<i>[lots of output, ending with...]</i>
+express@<strong>3.2.0</strong> ./node_modules/express 
+├── methods@0.0.1
+├── fresh@0.1.0
+├── cookie-signature@1.0.1
+├── range-parser@0.0.4
+├── buffer-crc32@0.2.1
+├── cookie@0.0.5
+├── commander@0.6.1
+├── debug@0.7.2
+├── mkdirp@0.3.5
+├── send@0.1.0 (mime@1.2.6)
+└── connect@2.7.6 (pause@0.0.1, buffer-crc32@0.1.1, bytes@0.2.0, formidable@1.0.11, qs@0.5.1)</pre>
+
+<p>I highlighted the version of Express that was installed because you want to record it in <tt>package.json</tt>. When you deploy a Node.js server, <tt>package.json</tt> will usually be used to install your server's dependencies, so it's good to keep it up-to-date.
+
+<p>Modify the <tt>package.json</tt> file to look like this:
+
+<pre class="file">{
+    "dependencies" : {
+        "express" : "<strong>3.2.x</strong>"
+    }
+}</pre>
+
+<p>We used "3.2.x" instead of "3.2.0" to allow backward-compatible bug-fix releases to be used when available. (If you like, <a href="http://blog.nodejitsu.com/package-dependencies-done-right">read more about semantic versioning and <tt>npm</tt> dependencies</a>.)
+
 
 <h2 class="section">1. Starting Out with Node.js</h2>
 
@@ -166,21 +213,7 @@ app.listen(3000, <span class="slot" title="This function will be called when the
 <p><strong>To enable debugging with Theseus</strong> (showing call counts next to the code), launch Node.js with <tt>node-theseus app.js</tt> instead of <tt>node app.js</tt>.
 
 
-<script src="../jquery.js"></script>
-<script>
-function selectText() {
-	if (document.selection) {
-		var range = document.body.createTextRange();
-		range.moveToElementText(this);
-		range.select();
-	} else if (window.getSelection) {
-		var range = document.createRange();
-		range.selectNode(this);
-		window.getSelection().addRange(range);
-	}
-}
-$(".select-all").on("click", selectText);
-</script>
+<script src="javascripts/jquery.js"></script>
 <script>
 var $popup = $("<div class='popup' />").appendTo(document.body).hide();
 var popupOwner = undefined;

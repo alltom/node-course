@@ -1,0 +1,128 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(public/stylesheets/style.css);
+
+</style>
+
+<h1>Node.js Mini-Course</h1>
+
+<p>Install all the software described below. Get started learning Node.js with the instructions that follow.
+
+<h2>Installation</h2>
+
+<table border="1">
+
+<tr>
+	<th>Software</th>
+	<th>Installation Instructions</th>
+	<th>Installation Verification Instructions</th>
+</tr>
+
+<tr>
+<td>
+<p><strong>Windows or OS&nbsp;X</strong>
+</td>
+<td>
+<p>Use the installation disks that came with your computer to install Windows or OS X.
+</td>
+<td>
+<p>You know it worked if:
+
+<ol>
+<li>You see a Start menu or a Dock. If you see penguins, you are probably using Linux and will not be able to use Brackets or Theseus.
+</ol>
+<p><img src="public/images/windows-verify.png" />
+</td>
+</tr>
+
+<tr>
+<td>
+<p><strong>Node.js</strong>
+</td>
+<td>
+<p><a href="http://nodejs.org/">Use the big install button on their web page</a> to download an installer.
+<p><a href="http://nodejs.org/"><img src="public/images/nodejs.png" /></a>
+</td>
+<td>
+<p>You know it worked if:
+
+<ol>
+<li><p>You can run <tt>node</tt> in a console and get a JavaScript prompt
+<li><p>You can run <tt>npm</tt> in a console and see instructions for how to invoke <tt>npm</tt>
+</ol>
+<p><img src="public/images/nodejs-verify.png" />
+</td>
+</tr>
+
+<tr>
+<td>
+<p><strong>Brackets</strong><br />(code editor)
+</td>
+<td>
+<p><a href="http://download.brackets.io/">Use the big download button on their web page</a>.
+<p><a href="http://download.brackets.io"><img src="public/images/brackets.png" /></a>
+</td>
+<td>
+<p>You know it worked if:
+
+<ol>
+<li><p>You can launch the Brackets application and see a text editor.
+	<br /><strong>OS X:</strong> If OS X says it doesn't trust Brackets, locate Brackets in the Finder and open it by right-clicking and selecting "Open".
+</ol>
+<p><img src="public/images/brackets-verify.png" />
+</td>
+</tr>
+
+<tr>
+<td>
+<p><strong>Theseus</strong><br />(debugging extension)
+</td>
+<td>
+<p>Theseus:
+<ol>
+<li><p>Launch Brackets.
+<li><p>Click the <i>File &gt; Install Extension...</i> menu item.
+<li><p>Paste this URL into the dialog and select OK: <span class="select-all">https://s3.amazonaws.com/alltom/theseus/theseus-0.2.3.zip</span>
+<li><p>Close and re-launch Brackets.
+</ol>
+<p>node-theseus:
+<ol>
+<li><p><strong>Windows:</strong> Open the Command Prompt program and run <tt>npm install -g node-theseus</tt><br /><strong>OS X:</strong> Open a Terminal and run <tt>sudo npm install -g node-theseus</tt>
+</ol>
+</td>
+<td>
+<p>You know it worked if:
+
+<ol>
+<li><p>You can launch the Brackets and see a new menu item, <i>Help &gt; Send Theseus Feedback...</i>
+<li><p>When you type <tt>node-theseus</tt> in a terminal, you see instructions for how to run <tt>node-theseus</tt>
+	<br /><img src="public/images/theseus-verify.png" />
+</ol>
+</td>
+</tr>
+
+</table>
+
+<h2>Start Programming!</h2>
+
+<p>Open <tt>public/tutorial-01.html</tt> in both Brackets <strong>and</strong> Chrome to continue.
+
+
+<script src="public/javascripts/jquery.js"></script>
+<script>
+function selectText() {
+	if (document.selection) {
+		var range = document.body.createTextRange();
+		range.moveToElementText(this);
+		range.select();
+	} else if (window.getSelection) {
+		var range = document.createRange();
+		range.selectNode(this);
+		window.getSelection().addRange(range);
+	}
+}
+$(".select-all").on("click", selectText);
+</script>
