@@ -3,7 +3,7 @@
 <title>Node.js Mini-Course</title>
 <style>
 
-@import url(stylesheets/style.css);
+@import url(stylesheets/tutorial.css);
 
 </style>
 
@@ -42,28 +42,4 @@ Server started at http://localhost:3000/</pre>
 
 
 <script src="javascripts/jquery.js"></script>
-<script>
-var $popup = $("<div class='popup' />").appendTo(document.body).hide();
-var popupOwner = undefined;
-
-$(document.body).on("mouseover", "span.slot", function (e) {
-	$popup.html($(this).attr("data-description")).show();
-	$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
-	popupOwner = this;
-});
-$(document.body).on("mousemove", "span.slot", function (e) {
-	if (popupOwner === this) {
-		$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
-	}
-});
-$(document.body).on("mouseout", "span.slot", function (e) {
-	if (popupOwner === this) {
-		$popup.hide();
-	}
-});
-
-$("span.slot").each(function () {
-	$(this).attr("data-description", $(this).attr("title"));
-	$(this).attr("title", "");
-});
-</script>
+<script src="javascripts/tutorial.js"></script>
