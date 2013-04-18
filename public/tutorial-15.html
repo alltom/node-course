@@ -32,7 +32,7 @@
 <li><p><tt>pg</tt> uses a "connection string" to specify the location of the server and the credentials for logging in. The connection string for the shared server is:
 	<pre class="file">var pgconnstring = "tcp://node-course:node-course password@alltom.com/node-course";</pre>
 
-<li><p><em>You</em> should encrypt passwords in your database, but my database has only dumb passwords so they are unencrypted. You can fetch the password for a user like this:
+<li><p><strong><em>You</em> should encrypt passwords in your database</strong>, but my database has only dumb passwords so they are unencrypted. You can fetch the password for a user like this:
 <pre class="file">pg.connect(pgconnstring, function (err, client, done) {
     if (err) {
         // error!
@@ -54,7 +54,7 @@
 
 </ol>
 
-<p>Now you can log in as one of those three cool people, with an even cooler password.
+<p>Now you can log in at <a href="http://localhost:3000/" target="_blank">http://localhost:3000/</a> as one of those three cool people, with an even cooler password.
 
 
 <h2>Continue</h2>

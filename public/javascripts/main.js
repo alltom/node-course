@@ -13,7 +13,7 @@ function updateCounter(count) {
 /** chat **/
 
 function addChatMessage(message) {
-	return $("<div />").text(message).appendTo('#chat .chat-history');
+	return $('<div />').text(message).appendTo('#chat .chat-history');
 }
 
 function sendChatMessage(message, callback) {

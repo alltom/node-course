@@ -17,12 +17,15 @@
 
 <li><p>Install the <tt>passport</tt> and <tt>passport-local</tt> libraries with <tt>npm</tt>, then add them to <tt>package.json</tt> (<a href="tutorial-03.html" target="_blank">the instructions, once again, are here</a>).
 
+<li><p>Include the <tt>passport</tt> module and the <tt>Strategy</tt> class of the <tt>passport-local</tt> module:
+<pre class="file">var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;</pre>
+
 <li><p>Web sites tell visitors apart by giving them cookies. The period of time that a user keeps a cookie is called a session. Support for cookies and sessions are not enabled by default in express. In fact, we need to add several <a href="http://stephensugden.com/middleware_guide/" target="_blank">middleware</a> to our server to support Passport.
 
-	<p>Rearrange all instances of <tt>app.use</tt> in <tt>app.js</tt> so that they occur together and in this order. Several of these are new.
+	<p>You have a call to <tt>app.use</tt> that adds the <tt>express.static</tt> middleware. Add these middleware right afterward. Order matters because they are invoked in the order you <tt>use</tt> them.
 
-<pre class="file">app.use(express.static(__dirname + '/public'));
-app.use(express.cookieParser());
+<pre class="file">app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.session({ secret: <span class="slot" title="This randomly-generated string is the password for encrypting session data to make it harder for people to hack your site. Treat it like any other password.">'session-secret-<span class="randomid"></span>'</span> }));
 app.use(passport.initialize());
@@ -54,7 +57,7 @@ passport.deserializeUser(<span class="slot" title="A callback function that Pass
 <pre class="file"><span class="slot" title="This is the first time we've used <tt>app.post</tt> instead of <tt>app.get</tt>. It's because it's the target of a form, not a URL anyone would want to bookmark.">app.post</span>('/login', <span class="slot" title="This returns a callback function, just like the ones we've written for <tt>app.get</tt> in the past.">passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login.html' })</span>);</pre>
 
 <li><p>Let's test it! Remember that our server's home page says "Hello, World!"? We don't want just anybody to be able to see that message. Let's require a password. Add <tt>requireLogin</tt> as a second argument to <tt>app.get</tt> for the home page, like this:
-<pre class="file">app.get('/', function (req, res) {
+<pre class="file">app.get('/', <strong>requireLogin</strong>, function (req, res) {
     res.end('Hello, world!');
 });</pre>
 	<p>Now if you visit <a href="http://localhost:3000/" target="_blank">http://localhost:3000/</a>, you should be redirected to <tt>login.html</tt>. Enter any username with the password 'pass' and you should be redirected to the home page and greeted with "Hello, World!"

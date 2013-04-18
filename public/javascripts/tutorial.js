@@ -1,7 +1,7 @@
 $(function () {
 
 // give something the 'select-all' class to make it select all of its contents when the user clicks it
-$(".select-all").on("click", function () {
+$('.select-all').on('click', function () {
 	if (document.selection) {
 		var range = document.body.createTextRange();
 		range.moveToElementText(this);
@@ -17,28 +17,28 @@ $(".select-all").on("click", function () {
 // when an item has the 'slot' class, hovering over it will
 // show the contents of the 'title' attribute in a popup that
 // follows the mouse
-var $popup = $("<div class='popup' />").appendTo(document.body).hide();
+var $popup = $('<div class="popup" />').appendTo(document.body).hide();
 var popupOwner = undefined;
 
-$(document.body).on("mouseover", "span.slot", function (e) {
-	$popup.html($(this).attr("data-description")).show();
+$(document.body).on('mouseover', 'span.slot', function (e) {
+	$popup.html($(this).attr('data-description')).show();
 	$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
 	popupOwner = this;
 });
-$(document.body).on("mousemove", "span.slot", function (e) {
+$(document.body).on('mousemove', 'span.slot', function (e) {
 	if (popupOwner === this) {
 		$popup.css({ left: e.pageX + 5, top: e.pageY + 5 });
 	}
 });
-$(document.body).on("mouseout", "span.slot", function (e) {
+$(document.body).on('mouseout', 'span.slot', function (e) {
 	if (popupOwner === this) {
 		$popup.hide();
 	}
 });
 
-$("span.slot").each(function () {
-	$(this).attr("data-description", $(this).attr("title"));
-	$(this).attr("title", "");
+$('span.slot').each(function () {
+	$(this).attr('data-description', $(this).attr('title'));
+	$(this).attr('title', '');
 });
 
 });
