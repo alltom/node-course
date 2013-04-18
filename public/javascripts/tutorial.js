@@ -1,3 +1,5 @@
+$(function () {
+
 // give something the 'select-all' class to make it select all of its contents when the user clicks it
 $(".select-all").on("click", function () {
 	if (document.selection) {
@@ -37,4 +39,6 @@ $(document.body).on("mouseout", "span.slot", function (e) {
 $("span.slot").each(function () {
 	$(this).attr("data-description", $(this).attr("title"));
 	$(this).attr("title", "");
+});
+
 });

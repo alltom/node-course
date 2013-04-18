@@ -1,0 +1,87 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+</style>
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>
+
+<h2>Prevent Unauthenticated Access to Pages: Set Up Passport</h2>
+
+<p>Logging into web sites is all the rage these days. <a href="http://passportjs.org/" target="_blank">Passport</a> is a great little library for letting users log in with a variety of methods. We're going to focus on logging in with a username and password (as opposed to with Twitter or Facebook).
+
+<ol class="instruction">
+
+<li><p>Install the <tt>passport</tt> and <tt>passport-local</tt> libraries with <tt>npm</tt>, then add them to <tt>package.json</tt> (<a href="tutorial-03.html" target="_blank">the instructions, once again, are here</a>).
+
+<li><p>Web sites tell visitors apart by giving them cookies. The period of time that a user keeps a cookie is called a session. Support for cookies and sessions are not enabled by default in express. In fact, we need to add several <a href="http://stephensugden.com/middleware_guide/" target="_blank">middleware</a> to our server to support Passport.
+
+	<p>Rearrange all instances of <tt>app.use</tt> in <tt>app.js</tt> so that they occur together and in this order. Several of these are new.
+
+<pre class="file">app.use(express.static(__dirname + '/public'));
+app.use(express.cookieParser());
+app.use(express.bodyParser());
+app.use(express.session({ secret: <span class="slot" title="This randomly-generated string is the password for encrypting session data to make it harder for people to hack your site. Treat it like any other password.">'session-secret-<span class="randomid"></span>'</span> }));
+app.use(passport.initialize());
+app.use(passport.session());</pre>
+
+<li><p>There's some more code that we need to add that we will treat as boilerplate for now. Paste it all in <tt>app.js</tt>.
+
+	<p>First is the function for determining whether a given username and password combination is valid:
+<pre class="file"><span class="slot" title="Notice this is <tt><em>passport</em>.use</tt> instead of <tt>app.use</tt>. It serves a similar purpose. We're providing <tt>passport</tt> for a strategy to use for logging in, rather than a middleware for <tt>app</tt> to use to handle requests.">passport.use</span>(new LocalStrategy(function (username, password, <span class="slot" title="This is the callback we send the result to. In general, checking whether a username and password combination is valid requires asynchronous operations, so we can't just return the result.">done</span>) {
+    if (<span class="slot" title="We accept any username as long as the password is 'pass'.">password === 'pass'</span>) {
+        return done(<span class="slot" title="The first argument to the callback is an error object, in case an error has occurred. No errors can occur here.">null</span>, <span class="slot" title="An object to represent the user">{ username: username }</span>);
+    }
+    return done(null, <span class="slot" title="Instead of a user object, we pass false to indicate that the username and password combination is invalid.">false</span>, <span class="slot" title="A description of the type of failure">{ message: 'Incorrect password.' }</span>);
+}));</pre>
+
+	<p>We also need to provide functions for serializing user objects so that they can be stored in the session.
+<pre class="file">passport.serializeUser(<span class="slot" title="A callback function that Passport will use to represent a user object as a string. This function just returns the username (asynchronously, to the callback called <tt>done</tt>).">function (user, done) { done(null, user.username) }</span>);
+passport.deserializeUser(<span class="slot" title="A callback function that Passport will use to get the user object that corresponds with the given string representation. Since our <tt>serializeUser</tt> callback just returns the username, we just return an object with that string as the username. The object is 'returned' asynchronously, to the callback called <tt>done</tt>.">function (username, done) { done(null, { username: username }) }</span>);</pre>
+
+	<p>This is a helper function we will use as a middleware. When it detects an unauthenticated request, it will redirect users to a login page. <tt>public/login.html</tt> already exists; <a href="login.html" target="_blank">you can look at it if you like</a>. It's a simple form that POSTs to <tt>/login</tt>.
+<pre class="file">function requireLogin(req, res, <span class="slot" title="When a middleware decides not to act, it calls <tt>next</tt> to pass through&#8212;like we do below when the user has valid credentials.">next</span>) {
+  if (req.isAuthenticated()) {
+      return next();
+  }
+  res.redirect('/login.html');
+}</pre>
+
+	<p>Finally, we'll register a handler for <tt>/login</tt>, the URL the login form POSTs to.
+<pre class="file"><span class="slot" title="This is the first time we've used <tt>app.post</tt> instead of <tt>app.get</tt>. It's because it's the target of a form, not a URL anyone would want to bookmark.">app.post</span>('/login', <span class="slot" title="This returns a callback function, just like the ones we've written for <tt>app.get</tt> in the past.">passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login.html' })</span>);</pre>
+
+<li><p>Let's test it! Remember that our server's home page says "Hello, World!"? We don't want just anybody to be able to see that message. Let's require a password. Add <tt>requireLogin</tt> as a second argument to <tt>app.get</tt> for the home page, like this:
+<pre class="file">app.get('/', function (req, res) {
+    res.end('Hello, world!');
+});</pre>
+	<p>Now if you visit <a href="http://localhost:3000/" target="_blank">http://localhost:3000/</a>, you should be redirected to <tt>login.html</tt>. Enter any username with the password 'pass' and you should be redirected to the home page and greeted with "Hello, World!"
+
+</ol>
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-15.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	<li><a href="http://passportjs.org/" target="_blank">Passport</a>
+	</ul>
+
+</div>
+
+<script>
+$(function () {
+	$('.randomid').text(String(Math.random()).replace(/[^0-9]/g, '').slice(0, 5));
+});
+</script>

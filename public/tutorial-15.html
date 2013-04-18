@@ -1,0 +1,84 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+</style>
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>
+
+<h2>Prevent Unauthenticated Access to Pages: Check Password Against a Database</h2>
+
+<p>For the purpose of this course, I am hosting a <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> database that contains the credentials for a few users:
+
+<table>
+	<tr><th>Username</th><th>Password</th></tr>
+	<tr><td>tom</td><td>sunshine</td></tr>
+	<tr><td>rob</td><td>rainbows</td></tr>
+	<tr><td>katrina</td><td>butterflies</td></tr>
+</table>
+
+<p>Let's fix your strategy to use that database instead of allowing every user with the password 'pass'.
+
+<ol class="instruction">
+
+<li><p>Install <tt>pg</tt> (a library for connecting to PostgreSQL servers) with <tt>npm install pg</tt> and add it to <tt>package.json</tt>.
+
+<li><p>Include the <tt>pg</tt> module in <tt>app.js</tt>
+	<pre class="file">var pg = require('pg');</pre>
+
+<li><p><tt>pg</tt> uses a "connection string" to specify the location of the server and the credentials for logging in. The connection string for the shared server is:
+	<pre class="file">var pgconnstring = "tcp://node-course:node-course password@alltom.com/node-course";</pre>
+
+<li><p><em>You</em> should encrypt passwords in your database, but my database has only dumb passwords so they are unencrypted. You can fetch the password for a user like this:
+<pre class="file">pg.connect(pgconnstring, function (err, client, done) {
+    if (err) {
+        // error!
+        <span class="slot" title="Make sure you call <tt>done</tt> once no matter what! Otherwise, the <tt>pg</tt> library assumes you are still using the connection and will not allow it to be used for other login requests.">done()</span>;
+    } else {
+        client.query('SELECT password FROM users WHERE username=<span class="slot" title="This will be replaced with the first item in the following array. You can also use <tt>$2</tt>, etc.">$1</span>', ['tom'], function (err, result) {
+            if (err) {
+                // error!
+            } else if (result.rows.length < 1) {
+                // no user found with that username!
+            } else {
+                console.log(result.rows[0].password)
+            }
+            done();
+        });
+    }
+});</pre>
+	<p>Adapt this snippet for your site: update your login strategy (the callback you pass to <tt>new LocalStrategy</tt>) to check the PostgreSQL database for whether a username and password is legitimate.
+
+</ol>
+
+<p>Now you can log in as one of those three cool people, with an even cooler password.
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-16.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	<li><a href="http://passportjs.org/" target="_blank">Passport</a>
+	<li><a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a>
+	<li><a href="https://github.com/brianc/node-postgres" target="_blank">node-postgres</a>
+	</ul>
+
+</div>
+
+<script>
+$(function () {
+	$('.randomid').text(String(Math.random()).replace(/[^0-9]/g, '').slice(0, 5));
+});
+</script>

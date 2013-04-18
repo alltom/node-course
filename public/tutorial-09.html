@@ -1,0 +1,75 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+</style>
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>
+
+<h2>Update a Web Page in Real-Time: Send Messages with socket.io</h2>
+
+<div class="callout">The number of people viewing this page is <span id="visitor-counter">X</span>.</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="javascripts/main.js"></script>
+
+<h3>Sending Messages</h3>
+
+<p>The way to send a message to the server from the browser (and vice-versa) is by calling the <tt>emit</tt> function on a <tt>socket</tt>:
+
+<pre class="file">socket.emit('<span class="slot" title="This is the name of the message. In these examples, the names describe the examples. :)">message without data</span>');
+socket.emit('message with data', <span class="slot" title="This can be any JavaScript object that can be converted to JSON, such as strings, numbers, arrays, and simple objects.">{ some_key: 'some value' }</span>);
+socket.emit('message with confirmation', <span class="slot" title="This callback function will be called when the server acknowledges the message. This function can take an argument, which will be the data sent by the server with the acknowledgement.">function (responseData) {
+}</span>);</pre>
+
+<p>You can also use <tt>socket.broadcast.emit()</tt>, which will send the message to every socket <em>except</em> that one.
+
+<h3>Receiving Messages</h3>
+
+<p>The way to receive a message is by calling the <tt>on</tt> function on a <tt>socket</tt>:
+
+<pre class="file">socket.on('message without data', function () {
+});
+socket.on('message with data', function (<span class="slot" title="<tt>data</tt> would be <tt>{ some_key: 'some value' }</tt>">data</span>) {
+});
+socket.on('message with confirmation', function (data, callback) {
+    callback(<span class="slot" title="Here, the data can again be any JSON-able object.">'response data'</span>);
+});
+</pre>
+
+<h3>Show the number of people on a page</h3>
+
+<p>Your task is to make the counter at the top of this page work!
+
+<ol class="instruction">
+
+<li><p>Create a global variable on the server for the number of people who are connected. (A global variable is one defined like <tt>var name = ...;</tt> outside of any function.)
+<li><p>When the server receives a new connection, increment that counter and broadcast a message named <tt>number of visitors</tt> with the value of the counter to everyone (including the new visitor).
+<li><p>When someone disconnects from the server, decrement that counter and broadcast its value to everyone. You know when someone disconnects because they send an event named <tt>'disconnect'</tt>.
+<li><p>When the client receives the <tt>number of visitors</tt> message, update the counter on this page. There's already an <tt>updateCounter(count)</tt> function defined to do this.
+	<p>Look for the comment <tt>// YOUR COUNTER CODE GOES HERE</tt> in <tt>javascripts/main.js</tt> to see where to put this code.
+
+</ol>
+
+<p>Open <a href="http://localhost:3000/tutorial-09.html" target="_blank">http://localhost:3000/tutorial-09.html</a> in new tabs and watch the number rise!
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-10.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	<li><a href="http://socket.io/" target="_blank">socket.io</a>
+	</ul>
+</div>

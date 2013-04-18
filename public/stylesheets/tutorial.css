@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Serif|PT+Serif:b|PT+Serif:i|PT+Sans|PT+Sans:b);
 
 body {
-	margin-bottom: 200px;
+	margin: 30px 30px 200px;
 	font-family: "PT Serif", serif;
 	color: #333;
 	font-size: 16px;
@@ -17,7 +17,7 @@ pre, code, tt, textarea {
 }
 
 tt, .select-all {
-	background: #eee;
+	background-color: #eee;
 }
 
 td {
@@ -76,4 +76,39 @@ div.popup {
 	border: 1px solid #ccc;
 	padding: 8px;
 	box-shadow: 4px 4px 4px #888;
+}
+
+div.footnotes {
+	background: #faf1c0;
+	margin: 120px 60px;
+	padding: 8px;
+	border-radius: 4px;
+}
+div.footnotes h2 {
+	margin-top: 0;
+}
+div.footnotes pre.file {
+	background-color: #ffd;
+}
+div.footnotes pre.file span.slot {
+	background: #faf1c0;
+}
+div.footnotes pre.file span.slot:hover {
+	background: #fff;
+}
+div.footnotes tt {
+	background-color: #ffe;
+}
+
+.callout {
+	margin: 30px;
+	background: #faf1c0;
+	padding: 20px;
+}
+.callout span {
+	font-weight: bold;
+}
+
+.pending {
+	font-style: italic;
 }

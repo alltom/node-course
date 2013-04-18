@@ -1,0 +1,96 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+.chat-history {
+	border: 1px solid black;
+	background: white;
+	min-height: 1em;
+}
+</style>
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>
+
+<h2>Update a Web Page in Real-Time: Send Messages with socket.io (Again!)</h2>
+
+<div class="callout">
+	<p>The number of people viewing this page is <span id="visitor-counter">X</span>.
+	<div id="chat">
+		<p>Chat:
+		<div class="chat-history"></div>
+		<p><input /> <button>Send</button>
+	</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="javascripts/main.js"></script>
+
+<p>We may as well let people chat while we're at it.
+
+<p><img src="images/chat-diagram.png" />
+
+<ol class="instruction">
+
+<li><p>On the server (<tt>app.js</tt>), listen for a message named <tt>chat message</tt> with the data being a string containing the message. When you receive it:
+	<ol class="instruction" type="i">
+	<li><p>Broadcast the message to every other user.
+	<li><p>Send an acknowledgement. (You don't need to send any data with the acknowledgement.
+	</ol>
+	<p>Check the notes at the bottom of this page for a reminder of how to send and receive messages and acknowledgements.
+
+<li><p>Look in browser-side JavaScript file <tt>main.js</tt> for the comment <tt>// YOUR MESSAGE-SENDING CODE GOES HERE</tt>. Finish the implementation of the <tt>sendChatMessage(message, callback)</tt> function:
+	<ol class="instruction" type="i">
+	<li><p>Send the chat message to the server in a message named <tt>chat message</tt>.
+	<li><p>Call the function <tt>callback</tt> when you receive server acknowledgement.
+	</ol>
+
+<li><p><tt>main.js</tt> will also need to listen for <tt>chat message</tt> messages sent by the server. Call <tt>addChatMessage(message)</tt> with the messages you receive.
+</ol>
+
+<p>Now you can open <a href="http://localhost:3000/tutorial-10.html" target="_blank">http://localhost:3000/tutorial-10.html</a> in a few tabs and chat it up!
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-11.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	<li><a href="http://socket.io/" target="_blank">socket.io</a>
+	</ul>
+	
+	<h3>Sending Messages</h3>
+
+	<p>The way to send a message to the server from the browser (and vice-versa) is by calling the <tt>emit</tt> function on a <tt>socket</tt>:
+
+<pre class="file">socket.emit('<span class="slot" title="This is the name of the message. In these examples, the names describe the examples. :)">message without data</span>');
+socket.emit('message with data', <span class="slot" title="This can be any JavaScript object that can be converted to JSON, such as strings, numbers, arrays, and simple objects.">{ some_key: 'some value' }</span>);
+socket.emit('message with confirmation', <span class="slot" title="This callback function will be called when the server acknowledges the message. This function can take an argument, which will be the data sent by the server with the acknowledgement.">function (responseData) {
+}</span>);</pre>
+
+	<p>You can also use <tt>socket.broadcast.emit()</tt>, which will send the message to every socket <em>except</em> that one.
+
+	<h3>Receiving Messages</h3>
+
+	<p>The way to receive a message is by calling the <tt>on</tt> function on a <tt>socket</tt>:
+
+<pre class="file">socket.on('message without data', function () {
+});
+socket.on('message with data', function (<span class="slot" title="<tt>data</tt> would be <tt>{ some_key: 'some value' }</tt>">data</span>) {
+});
+socket.on('message with acknowledgement', function (data, callback) {
+    callback(<span class="slot" title="Here, the data can again be any JSON-able object, or nothing at all.">'response data'</span>);
+});
+</pre>
+
+</div>

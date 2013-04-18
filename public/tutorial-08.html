@@ -1,0 +1,75 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+</style>
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io.connect('http://localhost:3000');
+</script>
+
+<h2>Update a Web Page in Real-Time: Connect to the Server with socket.io</h2>
+
+<p><a href="http://socket.io/" target="_blank">socket.io</a> is a library for conveniently exchanging messages between a Node.js server and a web page after the page has finished loading.
+
+<ol class="instruction">
+
+<li><p>Install socket.io with <tt>npm install socket.io</tt> and add it to the <tt>package.json</tt> file as a dependency. See <tt>public/tutorial-03.html</tt> if you don't quite remember how to do all that.
+	<p>Afterward, your <tt>package.json</tt> file will look like this:
+<pre class="file">{
+    "dependencies" : {
+        "express" : "3.2.x",
+        "socket.io" : "0.9.x"
+    }
+}</pre>
+
+<li><p>socket.io integrates with express, but it needs access to some of the server's underlying objects to do it. We need to change the way we create the server.
+
+	<ol class="instruction" type="i">
+
+	<li><p>In <tt>app.js</tt>, after creating the <tt>app</tt>, create the HTTP server manually by adding this line:
+		<pre class="file">var server = require('http').createServer(app);</pre>
+
+	<li><p>Later, instead of calling <tt>app.listen</tt>, call <tt>server.listen</tt>.
+
+	</ol>
+
+<li><p>Listen for socket.io connections by adding this line to the server (<tt>app.js</tt>):
+	<pre class="file">var io = require('socket.io').listen(server);</pre>
+
+<li>Still in <tt>app.js</tt>, register a callback for when someone connects:
+<pre class="file">io.sockets.on('connection', function (socket) {
+});</pre>
+
+</ol>
+
+<p>You may not have noticed, but <em>this very page is already attempting to connect to the server!</em> It includes this code near the top:
+<pre class="file">&lt;script src="<span class="slot" title="socket.io automatically intercepts requests for URLs starting with <tt>/socket.io/</tt> such as this one. In this case, it serves the code for the browser-side connection library.">/socket.io/socket.io.js</span>"&gt;&lt;/script&gt;
+&lt;script&gt;
+var socket = io.connect(<span class="slot" title="On a public server, you would omit this argument and socket.io would figure out the URL automatically. For now, leave it in.">'http://localhost:3000'</span>);
+&lt;/script&gt;</pre>
+
+<p>You can test whether you have set up socket.io correctly by reloading this page and checking whether the <tt>connection</tt> event (the one you registered an event handler for earlier) ever fires.</p>
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-09.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	<li><a href="http://socket.io/" target="_blank">socket.io</a>
+	</ul>
+</div>

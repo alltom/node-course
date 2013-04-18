@@ -1,0 +1,90 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+.chat-history {
+	border: 1px solid black;
+	background: white;
+	min-height: 1em;
+}
+</style>
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>
+
+<h2>Update a Web Page in Real-Time: Save Old Data to Disk</h2>
+
+<div class="callout">
+	<p>The number of people viewing this page is <span id="visitor-counter">X</span>.
+	<div id="chat">
+		<p>Chat:
+		<div class="chat-history"></div>
+		<p><input /> <button>Send</button>
+	</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="javascripts/main.js"></script>
+
+<p>If you restart your server, the chat history will be lost. It only exists in the memory of that Node.js process. We should store it in a database instead.
+
+<p><a href="http://redis.io/" target="_blank">Redis</a> is a convenient way to store persistent data. It's a database server that you can treat as a hash table (keys map to one or more values), though it does much more. It's "schema-less", which means that your schema is defined in comments littered throughout your code, instead of in the database.
+
+<p>Let's try redis!
+
+<ol class="instruction">
+
+<li><p>Install the <tt>redis</tt> library with <tt>npm install redis</tt> and add it to <tt>package.json</tt> (we've done this <a href="tutorial-03.html" target="_blank">at least once before</a>).
+
+<li><p>Connect to redis on the server.
+	<ol class="instruction" type="i">
+	<li><p>Include the <tt>redis</tt> library:
+		<pre class="file">var redis = require('redis');</pre>
+	<li><p>Connect to the server I have set up for this class:
+		<pre class="file">var redisClient = redis.createClient(6379, 'alltom.com');</pre>
+	</ol>
+
+	<li><p>When the server receives a message, instead of pushing it onto an array in memory (the <tt>messages</tt> array), push it on a redis list:
+<pre class="file">redisClient.rpush('<span class="slot" title="This is the name of the array on the server you want to push to. It doesn't have to exist before you use it.<br/><br/>This random number was generated just for you so that your messages won't get mixed with everyone else's. It will be different every time you load this page, so be careful.">messages-<span class="randomid">NETID</span></span>', message, <span class="slot" title="It's Node.js convention for callback functions to take <tt>err</tt> as their first argument. It will be <tt>null</tt> if there were no problems. It might not be <tt>null</tt> if there is a problem like a connection failure. What should you do in that case?">function (err) {
+}</span>);</pre>
+	<p>Note that this is an <em>asynchronous</em> operation. You don't know whether the message was actually added to the list until the callback is called (and you check the <tt>err</tt> object for an error).
+	<p>Since you don't want to, say, acknowledge that a message was received unless it was actually stored, you probably should acknowledge and broadcast the message <em>from the callback function</em> instead of right after you call <tt>redisClient.rpush</tt>.
+
+	<li><p>In the <tt>/chat-history</tt> request handler, return the list of messages from redis instead of the in-memory <tt>messages</tt> array. You can fetch a list from redis like this:
+<pre class="file">redisClient.lrange('<span class="slot" title="Take care that this name matches what you passed to <tt>rpush</tt>">messages-<span class="randomid">NETID</span></span>', <span class="slot" title="The index of the first message you want. The indices start at 0.">0</span>, <span class="slot" title="The index of the last message you want. A negative number counts backwards from the end of the list, starting at -1.">-1</span>, function (err, <span class="slot" title="This is the array of messages from the server (unless <tt>err</tt> is non-<tt>null</tt>).">messages</span>) {
+});</pre>
+		<p>Fetching a list is also <em>asynchronous</em>: <tt>redisClient.lrange</tt> <strong>does not</strong> return the messages. The messages are passed to the callback function as the second argument.
+		<p>Also be warned: <tt>messages</tt> will be <tt>null</tt> before any messages have been added. It will not be an empty array.
+
+	<li><p>Now, even if you restart the server, your chat messages should show up when you reload the page!
+
+</ol>
+
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-14.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	<li><a href="http://socket.io/" target="_blank">socket.io</a>
+	<li><a href="http://redis.io/" target="_blank">redis</a> (the server)
+	<li><a href="https://github.com/mranney/node_redis" target="_blank">redis</a> (the Node.js library for connecting to the server)
+	</ul>
+
+</div>
+
+<script>
+$(function () {
+	$('.randomid').text(String(Math.random()).replace(/[^0-9]/g, '').slice(0, 5));
+});
+</script>

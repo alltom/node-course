@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+</style>
+
+
+<h2>Serve Static Files with the Web Server</h2>
+
+<p>You usually want to use images, stylesheets (CSS), and JavaScript files on a web site, but you don't want to paste them all into <tt>app.js</tt>. Let's make it so that all the files in the <tt>public/</tt> directory can be accessed through the Node.js server.
+
+<ol class="instructions">
+
+<li><p>Add this line to <tt>app.js</tt> (after you define <tt>app</tt>, but before you call <tt>app.get</tt>).
+
+<pre class="file"><span class="slot" title="Adds a middleware to our HTTP server<br /><br />See the Notes below for information about middleware.">app.use</span>(<span class="slot" title="Creates a middleware that intercepts requests for files that exist on disk<br /><br />See the Notes below for information about middleware.">express.static</span>(<span class="slot" title="The path of the directory containing <tt>app.js</tt>">__dirname</span> + '/public'));</pre>
+
+<li><p>Kill and restart the web server, by pressing <i>Ctrl+C</i> in the terminal (possibly twice), then re-running <tt>node-theseus app.js</tt>. Instead of typing the command again, press <i>Up</i> to bring it back.
+
+<li><p>Visiting <a href="http://localhost:3000/images/falling.gif" target="_blank">http://localhost:3000/images/falling.gif</a> should now reveal a tragic image.
+
+</ol>
+
+<h2>Continue</h2>
+
+<p>Now that the <tt>public/</tt> directory is accessible through your server, let's use it to read the rest of the tutorial pages!
+
+<ol class="instructions">
+
+<li><p><strong>HACK!</strong> First, let's add a redirect. Brackets will try to open <tt>http://localhost:3000/public/tutorial-06.html</tt> by default instead of <tt>http://localhost:3000/tutorial-06.html</tt>, so let's redirect to the correct URL by adding this code to <tt>app.js</tt>:
+<pre class="file">app.get(<span class="slot" title="The first argument to <tt>app.get</tt> is the URL to match. Before it was <tt>/</tt>, but this time we use a 'regular expression' that matches all requests for pages in the <tt>public</tt> subdirectory">/^\/public\/(.+)/</span>, function (req, res) {
+    res.redirect('/' + <span class="slot" title="<tt>req.params[0]</tt> contains the first parenthesized match of the regular expression, which in this case is everything in the URL after <tt>/public/</tt>">req.params[0]</span>);
+});</pre>
+
+<li><p>Restart your Node.js server. This is your last reminder how: <i>Ctrl+C</i>, <i>Up</i>, <i>Enter</i> in the terminal.
+
+<li><p>Open Brackets' <i>File</i> menu and switch Theseus to <i>Proxy</i> mode so that it will act as a <em>proxy</em> to your server, instead of serving files directly from disk.
+	<p><img src="images/theseus-mode-proxy.png" />
+
+</ol>
+
+<p>Open <tt>public/tutorial-07.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Middleware</h3>
+
+	<p><a href="http://stephensugden.com/middleware_guide/" target="_blank">A short guide to Connect Middleware</a>. (<a href="http://www.senchalabs.org/connect/" target="_blank">connect</a> is a library used by express as part of the web server.)
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	</ul>
+</div>
+
+
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>

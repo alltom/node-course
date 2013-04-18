@@ -16,11 +16,11 @@
 
 <p>Hover over the highlighted portions of the code to see what they do.
 
-<pre class="file">var <span class="slot" title="<tt>require</tt> loads the 'express' module and we store it in a variable called <tt>express</tt>.">express = require("express")</span>;
+<pre class="file">var <span class="slot" title="<tt>require</tt> loads the 'express' module and we store it in a variable called <tt>express</tt>.">express = require('express')</span>;
 var <span class="slot" title="In this case, the 'express' module is a function that we can call to create a new server called 'app'.">app = express()</span>;
 
 <span class="slot" title="Our app's <tt>get</tt> function adds a callback for responding to HTTP GET requests.<br /><br />(When you type a URL in a browser, it makes a GET request.)">app.get</span>(<span class="slot" title="This is the URL that you want to respond to. It is relative to the root of the server, so &lt;tt&gt;/&lt;/tt&gt; corresponds to &lt;tt&gt;http://localhost:3000/&lt;/tt&gt; on this server.">'/'</span>, <span class="slot" title="This callback function will be called every time someone requests the given URL. &lt;br /&gt;&lt;br /&gt; &lt;tt&gt;req&lt;/tt&gt; is short for 'request'. &lt;br /&gt; &lt;tt&gt;res&lt;/tt&gt; is short for 'response'.">function (req, res) {
-    res.end("Hello, world!");
+    res.end('Hello, world!');
 }</span>);
 
 app.listen(3000, <span class="slot" title="This callback function will be called when the server launches. It is an optional argument to &lt;tt&gt;listen&lt;/tt&gt;, so you can leave it out.">function () {
@@ -43,6 +43,17 @@ Server started at http://localhost:3000/</pre>
 
 <p>Open <tt>public/tutorial-05.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
 
+
+<div class="footnotes">
+	<h2>Notes</h2>
+
+	<h3>Documentation</h3>
+
+	<ul>
+	<li><a href="http://nodejs.org/api/" target="_blank">Node.js</a>
+	<li><a href="http://expressjs.com/api.html" target="_blank">express</a>
+	</ul>
+</div>
 
 <script src="javascripts/jquery.js"></script>
 <script src="javascripts/tutorial.js"></script>

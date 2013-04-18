@@ -40,6 +40,23 @@
 
 <tr>
 <td>
+<p><strong>Google Chrome</strong>
+</td>
+<td>
+<p><a href="https://www.google.com/intl/en/chrome/browser/">Use the big download button on their web page</a>.
+<p><a href="https://www.google.com/intl/en/chrome/browser/"><img src="public/images/chrome.png" /></a>
+</td>
+<td>
+<p>You know it worked if:
+
+<ol>
+<li>You can launch Chrome and see a web browser.
+</ol>
+</td>
+</tr>
+
+<tr>
+<td>
 <p><strong>Node.js</strong>
 </td>
 <td>
@@ -50,8 +67,8 @@
 <p>You know it worked if:
 
 <ol>
-<li><p>You can run <tt>node</tt> in a console and get a JavaScript prompt
-<li><p>You can run <tt>npm</tt> in a console and see instructions for how to invoke <tt>npm</tt>
+<li><p>You can run <tt>node</tt> in a <a href="#terminals">console</a> and get a JavaScript prompt
+<li><p>You can run <tt>npm</tt> in a <a href="#terminals">console</a> and see instructions for how to invoke <tt>npm</tt>
 </ol>
 <p><img src="public/images/nodejs-verify.png" />
 </td>
@@ -64,13 +81,14 @@
 <td>
 <p><a href="http://download.brackets.io/">Use the big download button on their web page</a>.
 <p><a href="http://download.brackets.io"><img src="public/images/brackets.png" /></a>
+<p>If the current version is no longer "Sprint 23", use the "Other Downloads" link to download "Sprint 23".
 </td>
 <td>
 <p>You know it worked if:
 
 <ol>
 <li><p>You can launch the Brackets application and see a text editor.
-	<br /><strong>OS X:</strong> If OS X says it doesn't trust Brackets, locate Brackets in the Finder and open it by right-clicking and selecting "Open".
+	<br /><strong>OS X:</strong> If OS X says it doesn't trust Brackets, locate Brackets in the Finder and open it by right-clicking and selecting "Open". You will be given the option to trust Brackets.
 </ol>
 <p><img src="public/images/brackets-verify.png" />
 </td>
@@ -86,11 +104,12 @@
 <li><p>Launch Brackets.
 <li><p>Click the <i>File &gt; Install Extension...</i> menu item.
 <li><p>Paste this URL into the dialog and select OK: <span class="select-all">https://s3.amazonaws.com/alltom/theseus/theseus-0.2.3.zip</span>
+	<p>This step may claim to fail even when it succeeds. If it really doesn't work, click <i>Help &gt; Show Extensions Folder</i> and manually copy the <tt>brackets-theseus</tt> directory from the zip file to that folder.
 <li><p>Close and re-launch Brackets.
 </ol>
 <p>node-theseus:
 <ol>
-<li><p><strong>Windows:</strong> Open the Command Prompt program and run <tt>npm install -g node-theseus</tt><br /><strong>OS X:</strong> Open a Terminal and run <tt>sudo npm install -g node-theseus</tt>
+<li><p><strong>Windows:</strong> Open a <a href="#terminals">console</a> and run <tt>npm install -g node-theseus</tt><br /><strong>OS X:</strong> Open a <a href="#terminals">console</a> and run <tt>sudo npm install -g node-theseus</tt>
 </ol>
 </td>
 <td>
@@ -98,7 +117,7 @@
 
 <ol>
 <li><p>You can launch the Brackets and see a new menu item, <i>Help &gt; Send Theseus Feedback...</i>
-<li><p>When you type <tt>node-theseus</tt> in a terminal, you see instructions for how to run <tt>node-theseus</tt>
+<li><p>When you type <tt>node-theseus</tt> in a <a href="#terminals">console</a>, you see instructions for how to run <tt>node-theseus</tt>
 	<br /><img src="public/images/theseus-verify.png" />
 </ol>
 </td>
@@ -108,10 +127,28 @@
 
 <h2>Start Programming!</h2>
 
-<p>In Brackets, click the <i>File &gt; Open Folder...</i> menu item and open the <tt>node-course</tt> directory (the directory containing this file, <tt>README.html</tt>).
+<ol class="instructions">
+<li><p>In Brackets, click the <i>File &gt; Open Folder...</i> menu item and open the <tt>node-course</tt> directory (the directory containing this file, <tt>README.html</tt>).
+<li><p>Open the <tt>public/tutorial-01.html</tt> file in Brackets.
+<li><p>Open the <i>File</i> menu and ensure that Theseus is enabled and in <i>Static</i> mode.
+	<p><img src="public/images/theseus-mode-static.png" />
+<li><p>Click the lightning bolt in the upper-right corner of Brackets to <strong>Go Live</strong>. This will open the current file in Chrome and establish a sweet debugging connection to that page.
+	<p><img src="public/images/brackets-go-live.png" />
+	<p>Brackets may ask you to relaunch Chrome if it can't establish a connection. You should do what it says.
+	<p><img src="public/images/brackets-relaunch-chrome.png" />
+<li><p>You can close this tab now.
+</ol>
 
-<p>Open <tt>public/tutorial-01.html</tt> in Brackets open it in Chrome by clicking the lightning bolt.
 
+<div class="footnotes">
+<h2>Notes</h2>
+<h3><a name="terminals"></a>Consoles/Terminals</h3>
+<p>You run commands in a terminal by typing them and pressing <i>Enter</i>. Here are instructions for opening a terminal.</p>
+<h4>OS X</h4>
+<p>Launch <tt>Terminal.app</tt>. The easiest way is to activate Spotlight by clicking the magnifying glass in the upper right corner of the screen (or pressing <i>Apple+Space</i>), typing "terminal", and clicking the first Application result.
+<h4>Winows</h4>
+<p>Launch <tt>cmd</tt>. The easiest way is to open the Start menu, typing "cmd" in the search box, and selecting the result for the program <tt>cmd</tt>.
+</div>
 
 <script src="public/javascripts/jquery.js"></script>
 <script src="public/javascripts/tutorial.js"></script>

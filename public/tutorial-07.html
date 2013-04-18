@@ -1,0 +1,41 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Node.js Mini-Course</title>
+<style>
+
+@import url(stylesheets/tutorial.css);
+
+</style>
+
+
+<h2>Understand Web Page JavaScript with the Theseus Debugger</h2>
+
+<p>The payoff for opening the web page with the lightning bolt is that Theseus will work on the JavaScript on a page as well.
+
+<p>Look at the source for this page in Brackets!
+
+<div id="colorbox" style="width: 100px; height: 100px"></div>
+<script>
+setInterval(function () {
+	var colors = ['red', 'green', 'blue'];
+	var color = colors[Math.floor(Math.random() * colors.length)];
+	document.getElementById("colorbox").style.background = color;
+}, 1000);
+</script>
+
+<p>You should see the call counts again:
+<p><img src="images/theseus-inline-example.png" />
+
+<p>I just wanted to point that out. It'll only work with static HTML files and JS files, though, not server-generated ones.
+
+<h3>Caveats</h3>
+
+<p>Theseus can be finicky in <i>Proxy</i> mode. If you don't see call counts, check the lightning bolt. If it's not bright orange like this <img src="images/brackets-lightning-bolt.png" />, Theseus may have lost connection with Chrome. Just close the broken tab and click the lightning bolt again.
+
+<h2>Continue</h2>
+
+<p>Open <tt>public/tutorial-08.html</tt> in Brackets. It should automatically open in this Chrome tab as well. If not, click the lightning bolt again.
+
+
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/tutorial.js"></script>
