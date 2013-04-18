@@ -1,17 +1,16 @@
 var socket = io.connect('http://localhost:3000');
 
 
-/** visitor counter code **/
+/** visitor counter **/
 
 function updateCounter(count) {
 	$('#visitor-counter').text(count);
 }
 
 // YOUR COUNTER CODE GOES HERE
-socket.on('number of visitors', updateCounter);
 
 
-/** chat code **/
+/** chat **/
 
 function addChatMessage(message) {
 	return $("<div />").text(message).appendTo('#chat .chat-history');
@@ -19,9 +18,6 @@ function addChatMessage(message) {
 
 function sendChatMessage(message, callback) {
 	// YOUR MESSAGE-SENDING CODE GOES HERE
-	socket.emit('chat message', message, function () {
-		callback();
-	});
 }
 
 $(document).ready(function () {
@@ -38,11 +34,5 @@ $(document).ready(function () {
 		sendChatMessage(message, function () {
 			$message.removeClass('pending');
 		});
-	});
-	
-	socket.on('chat message', addChatMessage);
-	
-	$.getJSON('/chat-history', function (messages) {
-		messages.forEach(addChatMessage);
 	});
 });
